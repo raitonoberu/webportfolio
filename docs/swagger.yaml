@@ -1,0 +1,435 @@
+basePath: /api
+definitions:
+  httptransport.errorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  internal.CreateProjectRequest:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  internal.CreateProjectResponse:
+    properties:
+      id:
+        type: integer
+    type: object
+  internal.CreateUserRequest:
+    properties:
+      bio:
+        type: string
+      email:
+        type: string
+      fullname:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - fullname
+    - password
+    - username
+    type: object
+  internal.DeleteProjectRequest:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  internal.GetProjectResponse:
+    properties:
+      comments_count:
+        type: integer
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      likes_count:
+        type: integer
+      name:
+        type: string
+      readme:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  internal.GetUserResponse:
+    properties:
+      avatar:
+        type: boolean
+      bio:
+        type: string
+      email:
+        type: string
+      followers_count:
+        type: integer
+      fullname:
+        type: string
+      id:
+        type: integer
+      projects:
+        items:
+          $ref: '#/definitions/internal.GetProjectResponse'
+        type: array
+      username:
+        type: string
+    type: object
+  internal.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  internal.LoginResponse:
+    properties:
+      id:
+        type: integer
+      token:
+        type: string
+    type: object
+  internal.UpdateProjectRequest:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      readme:
+        type: string
+    required:
+    - id
+    type: object
+  internal.UpdateUserRequest:
+    properties:
+      bio:
+        type: string
+      fullname:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: WebPortfolio API
+  version: "1.0"
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal.LoginResponse'
+        "400":
+          description: validation failed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "403":
+          description: wrong password
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      summary: Login to account
+      tags:
+      - auth
+  /project:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal.DeleteProjectRequest'
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "404":
+          description: project not found
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Delete project
+      tags:
+      - project
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: id
+        type: integer
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: user_id
+        type: integer
+      - in: query
+        name: username
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: project
+          schema:
+            $ref: '#/definitions/internal.GetProjectResponse'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "404":
+          description: project not found
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      summary: Get project
+      tags:
+      - project
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal.UpdateProjectRequest'
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: validation failed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Update project
+      tags:
+      - project
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal.CreateProjectRequest'
+      responses:
+        "200":
+          description: project
+          schema:
+            $ref: '#/definitions/internal.CreateProjectResponse'
+        "400":
+          description: validation failed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Create project
+      tags:
+      - project
+  /upload/avatar:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - description: image
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Upload avatar
+      tags:
+      - upload
+  /upload/project:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - description: zip-archive
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: project id
+        in: formData
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: file is too big
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "404":
+          description: project not found
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Upload project
+      tags:
+      - upload
+  /user:
+    delete:
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Delete user
+      tags:
+      - user
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: id
+        type: integer
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: projects
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: user
+          schema:
+            $ref: '#/definitions/internal.GetUserResponse'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      summary: Get user
+      tags:
+      - user
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal.UpdateUserRequest'
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Update user
+      tags:
+      - user
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal.CreateUserRequest'
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: validation failed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "409":
+          description: email already exists
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      summary: Create user
+      tags:
+      - user
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

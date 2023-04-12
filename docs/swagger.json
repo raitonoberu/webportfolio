@@ -1,0 +1,685 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "WebPortfolio API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/api",
+    "paths": {
+        "/login": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Login to account",
+                "parameters": [
+                    {
+                        "description": "body params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/internal.LoginResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "validation failed",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "wrong password",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "user not found",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/project": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "project"
+                ],
+                "summary": "Get project",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "user_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "username",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "project",
+                        "schema": {
+                            "$ref": "#/definitions/internal.GetProjectResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "project not found",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "project"
+                ],
+                "summary": "Create project",
+                "parameters": [
+                    {
+                        "description": "body params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal.CreateProjectRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "project",
+                        "schema": {
+                            "$ref": "#/definitions/internal.CreateProjectResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "validation failed",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "not authorized",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "project"
+                ],
+                "summary": "Delete project",
+                "parameters": [
+                    {
+                        "description": "body params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal.DeleteProjectRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "not authorized",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "project not found",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "project"
+                ],
+                "summary": "Update project",
+                "parameters": [
+                    {
+                        "description": "body params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal.UpdateProjectRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "validation failed",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "not authorized",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/upload/avatar": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "tags": [
+                    "upload"
+                ],
+                "summary": "Upload avatar",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "image",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "not authorized",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/upload/project": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "tags": [
+                    "upload"
+                ],
+                "summary": "Upload project",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "zip-archive",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "project id",
+                        "name": "id",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "file is too big",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "not authorized",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "project not found",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "projects",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "user",
+                        "schema": {
+                            "$ref": "#/definitions/internal.GetUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "user not found",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Create user",
+                "parameters": [
+                    {
+                        "description": "body params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal.CreateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "validation failed",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "email already exists",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Delete user",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "not authorized",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Update user",
+                "parameters": [
+                    {
+                        "description": "body params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal.UpdateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "not authorized",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "httptransport.errorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal.CreateProjectRequest": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal.CreateProjectResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "internal.CreateUserRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "fullname",
+                "password",
+                "username"
+            ],
+            "properties": {
+                "bio": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "fullname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal.DeleteProjectRequest": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "internal.GetProjectResponse": {
+            "type": "object",
+            "properties": {
+                "comments_count": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "likes_count": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "readme": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "internal.GetUserResponse": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "boolean"
+                },
+                "bio": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "followers_count": {
+                    "type": "integer"
+                },
+                "fullname": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "projects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/internal.GetProjectResponse"
+                    }
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal.LoginRequest": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal.UpdateProjectRequest": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "readme": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal.UpdateUserRequest": {
+            "type": "object",
+            "properties": {
+                "bio": {
+                    "type": "string"
+                },
+                "fullname": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "description": "Type \"Bearer\" followed by a space and JWT token.",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
