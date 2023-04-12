@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"os"
-	"time"
 
 	"webportfolio/internal/httptransport"
 	"webportfolio/internal/service"
@@ -15,8 +14,6 @@ import (
 )
 
 func main() {
-	dev := os.Getenv("ENV") == "dev"
-
 	dbUser := os.Getenv("POSTGRES_USER")
 	dbPassword := os.Getenv("POSTGRES_PASSWORD")
 
@@ -28,7 +25,7 @@ func main() {
 		pgdriver.WithInsecure(true),
 	)
 
-	if dev {
+	if os.Getenv("ENV") == "dev" {
 		dbConnector.Config().Addr = "127.0.0.1:5432"
 	}
 
@@ -40,11 +37,6 @@ func main() {
 	err := service.CreateRelations(context.Background())
 	if err != nil {
 		panic(err)
-	}
-
-	if !dev {
-		// wait for postgres to start
-		time.Sleep(5 * time.Second)
 	}
 
 	panic(httptransport.Handler(service, secret).Start(":8000"))
