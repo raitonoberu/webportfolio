@@ -3,6 +3,8 @@ package httptransport
 import (
 	"fmt"
 	"net/http"
+	"regexp"
+	"strings"
 
 	"webportfolio/internal"
 
@@ -49,6 +51,7 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 	}))
 	e.Use(middleware.Recover())
 	// e.Use(middleware.Secure())
+	e.Use(contentMiddleware)
 	e.Use(middleware.StaticWithConfig(middleware.StaticConfig{
 		Root:  "static",
 		HTML5: true,
@@ -116,6 +119,24 @@ func httpErrorHandler(err error, c echo.Context) {
 	}
 	c.Logger().Error(fmt.Sprintf("[%v] %s", code, msg))
 	c.JSON(code, errorResponse{Message: msg})
+}
+
+var contentRegex = regexp.MustCompile(`/content/([\w-]+)/([\w-]+)`)
+
+// Temporary workaround for unavailable content assets
+func contentMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		referer := c.Request().Referer()
+		path := c.Request().URL.Path
+
+		if strings.Contains(referer, "/content/") && !strings.HasPrefix(path, "/content/") {
+			match := contentRegex.FindStringSubmatch(referer)
+			if len(match) == 3 {
+				return c.Redirect(302, fmt.Sprintf("/content/%s/%s%s", match[1], match[2], path))
+			}
+		}
+		return next(c)
+	}
 }
 
 type errorResponse struct {
