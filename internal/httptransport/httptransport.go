@@ -81,9 +81,8 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 	e.POST("/api/upload/avatar", h.uploadAvatar, authMiddleware)
 	e.POST("/api/upload/project", h.uploadProject, authMiddleware)
 
-	// content
+	// avatars
 	e.Static("/avatars", "content/avatars")
-	e.Static("/content", "content/projects")
 
 	if l, ok := e.Logger.(*log.Logger); ok {
 		l.SetHeader("${time_rfc3339} ${level}")
