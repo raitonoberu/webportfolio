@@ -3,7 +3,6 @@ package httptransport
 import (
 	"fmt"
 	"net/http"
-	"regexp"
 	"strings"
 
 	"webportfolio/internal"
@@ -121,21 +120,32 @@ func httpErrorHandler(err error, c echo.Context) {
 	c.JSON(code, errorResponse{Message: msg})
 }
 
-var contentRegex = regexp.MustCompile(`/content/([\w-]+)/([\w-]+)`)
-
-// Temporary workaround for unavailable content assets
 func contentMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		referer := c.Request().Referer()
-		path := c.Request().URL.Path
+		req := c.Request()
 
-		if strings.Contains(referer, "/content/") && !strings.HasPrefix(path, "/content/") {
-			match := contentRegex.FindStringSubmatch(referer)
-			if len(match) == 3 {
-				return c.Redirect(302, fmt.Sprintf("/content/%s/%s%s", match[1], match[2], path))
-			}
+		host := req.Host
+		hostParts := strings.Split(host, ".")
+		if len(hostParts) < 3 {
+			// no subdomain
+			return next(c)
 		}
-		return next(c)
+
+		user := hostParts[0]
+
+		path := req.URL.Path
+		pathParts := strings.Split(path, "/") // len >= 2
+		if pathParts[1] == "" {
+			// empty project name, redirecting to user page
+			return c.Redirect(302, fmt.Sprintf("http://web-portfolio.tech/%s", user))
+		}
+
+		referer := req.Referer()
+		refererParts := strings.Split(referer, "/")
+		if len(refererParts) > 3 {
+			return c.File(fmt.Sprintf("content/projects/%s/%s%s", user, refererParts[3], req.URL.Path))
+		}
+		return c.File(fmt.Sprintf("content/projects/%s%s", user, req.URL.Path))
 	}
 }
 
