@@ -49,7 +49,7 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 		Format: "${time_rfc3339} ${method} ${uri}" + "\n",
 	}))
 	e.Use(middleware.Recover())
-	// e.Use(middleware.Secure())
+	e.Use(middleware.CORS())
 	e.Use(contentMiddleware)
 	e.Use(middleware.StaticWithConfig(middleware.StaticConfig{
 		Root:  "static",
