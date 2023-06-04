@@ -12,4 +12,6 @@ var (
 	UsernameExistsErr  = echo.NewHTTPError(409, "username already exists")
 	EmailExistsErr     = echo.NewHTTPError(409, "email already exists")
 	ProjectExistsErr   = echo.NewHTTPError(409, "project already exists")
+	ProjectLikedErr    = echo.NewHTTPError(409, "project is already liked")
+	ProjectNotLikedErr = echo.NewHTTPError(409, "project is not liked")
 )

@@ -23,10 +23,10 @@ type Service interface {
 	DeleteProject(context.Context, DeleteProjectRequest) error
 	UploadProject(context.Context, UploadProjectRequest) error
 
-	// -- unimplemented
+	CreateLike(context.Context, CreateLikeRequest) error
+	DeleteLike(context.Context, DeleteLikeRequest) error
 
-	CreateLike(context.Context, Like) error
-	DeleteLike(context.Context, Like) error
+	// -- unimplemented
 
 	CreateComment(context.Context, Comment) error
 	Comments(context.Context, int64) ([]Comment, error)
@@ -132,7 +132,9 @@ type UpdateProjectRequest struct {
 	Description *string `json:"description"`
 	Readme      *string `json:"readme"`
 
-	UserID int64 `json:"-"`
+	UpdatedAt  *time.Time `json:"-"`
+	LikesCount *int64     `json:"-"`
+	UserID     int64      `json:"-"`
 }
 
 type DeleteProjectRequest struct {
@@ -146,4 +148,16 @@ type UploadProjectRequest struct {
 
 	File   *multipart.FileHeader `json:"-"`
 	UserID int64                 `json:"-"`
+}
+
+type CreateLikeRequest struct {
+	ID int64 `json:"id" validate:"required"`
+
+	UserID int64 `json:"-"`
+}
+
+type DeleteLikeRequest struct {
+	ID int64 `json:"id" validate:"required"`
+
+	UserID int64 `json:"-"`
 }
