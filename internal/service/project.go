@@ -71,7 +71,7 @@ func (s *service) GetProject(ctx context.Context, req internal.GetProjectRequest
 		Description:   project.Description,
 		Readme:        project.Readme,
 		LikesCount:    project.LikesCount,
-		CommentsCount: project.LikesCount,
+		CommentsCount: project.CommentsCount,
 		CreatedAt:     project.CreatedAt,
 		UpdatedAt:     project.UpdatedAt,
 	}, nil
