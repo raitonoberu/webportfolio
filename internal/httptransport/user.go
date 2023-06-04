@@ -73,10 +73,10 @@ func (h *handler) getUser(c echo.Context) error {
 // @Security Bearer
 func (h *handler) updateUser(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
+	claims := user.Claims.(*internal.JwtClaims)
 
 	data := internal.UpdateUserRequest{
-		ID: claims["id"].(int64),
+		ID: claims.ID,
 	}
 	if err := c.Bind(&data); err != nil {
 		return err
@@ -102,10 +102,10 @@ func (h *handler) updateUser(c echo.Context) error {
 // @Security Bearer
 func (h *handler) deleteUser(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
+	claims := user.Claims.(*internal.JwtClaims)
 
 	data := internal.DeleteUserRequest{
-		ID: claims["id"].(int64),
+		ID: claims.ID,
 	}
 
 	ctx := c.Request().Context()
@@ -126,10 +126,10 @@ func (h *handler) deleteUser(c echo.Context) error {
 // @Security Bearer
 func (h *handler) uploadAvatar(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
+	claims := user.Claims.(*internal.JwtClaims)
 
 	data := internal.UploadAvatarRequest{
-		UserID: claims["id"].(int64),
+		UserID: claims.ID,
 	}
 	file, err := c.FormFile("file")
 	if err != nil {

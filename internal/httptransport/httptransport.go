@@ -10,6 +10,7 @@ import (
 	_ "webportfolio/docs"
 
 	"github.com/go-playground/validator"
+	"github.com/golang-jwt/jwt/v4"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -37,7 +38,12 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 
 	h := &handler{service}
 
-	authMiddleware := echojwt.JWT([]byte(secret))
+	authMiddleware := echojwt.WithConfig(echojwt.Config{
+		NewClaimsFunc: func(c echo.Context) jwt.Claims {
+			return new(internal.JwtClaims)
+		},
+		SigningKey: []byte(secret),
+	})
 
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "${time_rfc3339} ${method} ${uri}" + "\n",
@@ -70,10 +76,6 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 	e.GET("/api/project", h.getProject)
 	e.PATCH("/api/project", h.updateProject, authMiddleware)
 	e.DELETE("/api/project", h.deleteProject, authMiddleware)
-
-	// like
-	e.POST("/api/like", h.createLike, authMiddleware)
-	e.DELETE("/api/like", h.deleteLike, authMiddleware)
 
 	// upload
 	e.POST("/api/upload/avatar", h.uploadAvatar, authMiddleware)
