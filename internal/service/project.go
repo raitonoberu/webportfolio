@@ -78,6 +78,18 @@ func (s *service) GetProject(ctx context.Context, req internal.GetProjectRequest
 }
 
 func (s *service) UpdateProject(ctx context.Context, req internal.UpdateProjectRequest) error {
+	if req.UserID != 0 {
+		project, err := s.GetProject(ctx, internal.GetProjectRequest{
+			ID: &req.ID,
+		})
+		if err != nil {
+			return err
+		}
+		if project.UserID != req.UserID {
+			return internal.ProjectNotFoundErr
+		}
+	}
+
 	query := s.DB.NewUpdate().
 		Model((*internal.Project)(nil)).
 		Where("id = ?", req.ID)
@@ -196,6 +208,7 @@ func (s *service) UploadProject(ctx context.Context, req internal.UploadProjectR
 
 	now := time.Now()
 	err = s.UpdateProject(ctx, internal.UpdateProjectRequest{
+		ID:        req.ID,
 		UpdatedAt: &now,
 	})
 	if err != nil {

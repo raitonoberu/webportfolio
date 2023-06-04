@@ -39,6 +39,7 @@ func (s *service) CreateLike(ctx context.Context, req internal.CreateLikeRequest
 
 	likesCount := project.LikesCount + 1
 	return s.UpdateProject(ctx, internal.UpdateProjectRequest{
+		ID:         req.ID,
 		LikesCount: &likesCount,
 	})
 }
@@ -74,6 +75,7 @@ func (s *service) DeleteLike(ctx context.Context, req internal.DeleteLikeRequest
 
 	likesCount := project.LikesCount - 1
 	return s.UpdateProject(ctx, internal.UpdateProjectRequest{
+		ID:         req.ID,
 		LikesCount: &likesCount,
 	})
 }
