@@ -40,7 +40,7 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 
 	authMiddleware := echojwt.WithConfig(echojwt.Config{
 		NewClaimsFunc: func(c echo.Context) jwt.Claims {
-			return internal.JwtClaims{}
+			return &internal.JwtClaims{}
 		},
 		SigningKey: []byte(secret),
 	})

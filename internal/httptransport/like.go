@@ -20,10 +20,10 @@ import (
 // @Security Bearer
 func (h *handler) createLike(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
+	claims := user.Claims.(*internal.JwtClaims)
 
 	data := internal.CreateLikeRequest{
-		UserID: claims["id"].(int64),
+		UserID: claims.ID,
 	}
 	if err := c.Bind(&data); err != nil {
 		return err
@@ -53,10 +53,10 @@ func (h *handler) createLike(c echo.Context) error {
 // @Security Bearer
 func (h *handler) deleteLike(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
+	claims := user.Claims.(*internal.JwtClaims)
 
 	data := internal.DeleteLikeRequest{
-		UserID: claims["id"].(int64),
+		UserID: claims.ID,
 	}
 	if err := c.Bind(&data); err != nil {
 		return err
