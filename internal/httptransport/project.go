@@ -23,7 +23,7 @@ func (h *handler) createProject(c echo.Context) error {
 	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.CreateProjectRequest{
-		UserID: claims["id"].(int64),
+		UserID: int64(claims["id"].(float64)),
 	}
 	if err := c.Bind(&data); err != nil {
 		return err
@@ -83,7 +83,7 @@ func (h *handler) updateProject(c echo.Context) error {
 	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.UpdateProjectRequest{
-		UserID: claims["id"].(int64),
+		UserID: int64(claims["id"].(float64)),
 	}
 	if err := c.Bind(&data); err != nil {
 		return err
@@ -118,7 +118,7 @@ func (h *handler) deleteProject(c echo.Context) error {
 	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.DeleteProjectRequest{
-		UserID: claims["id"].(int64),
+		UserID: int64(claims["id"].(float64)),
 	}
 	if err := c.Bind(&data); err != nil {
 		return err
@@ -151,7 +151,7 @@ func (h *handler) uploadProject(c echo.Context) error {
 	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.UploadProjectRequest{
-		UserID: claims["id"].(int64),
+		UserID: int64(claims["id"].(float64)),
 	}
 	file, err := c.FormFile("file")
 	if err != nil {
