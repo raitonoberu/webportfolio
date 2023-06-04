@@ -11,7 +11,7 @@ type Service interface {
 
 	Login(context.Context, LoginRequest) (*LoginResponse, error)
 
-	CreateUser(context.Context, CreateUserRequest) error
+	CreateUser(context.Context, CreateUserRequest) (*CreateUserResponse, error)
 	GetUser(context.Context, GetUserRequest) (*GetUserResponse, error)
 	UpdateUser(context.Context, UpdateUserRequest) error
 	DeleteUser(context.Context, DeleteUserRequest) error
@@ -55,6 +55,11 @@ type CreateUserRequest struct {
 	Email    string `json:"email" validate:"required,email"`
 
 	Bio string `json:"bio"`
+}
+
+type CreateUserResponse struct {
+	ID    int64  `json:"id"`
+	Token string `json:"token"`
 }
 
 type GetUserRequest struct {

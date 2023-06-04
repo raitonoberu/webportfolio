@@ -13,16 +13,16 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (s *service) CreateUser(ctx context.Context, req internal.CreateUserRequest) error {
+func (s *service) CreateUser(ctx context.Context, req internal.CreateUserRequest) (*internal.CreateUserResponse, error) {
 	usernameExists, err := s.DB.NewSelect().
 		Model((*internal.User)(nil)).
 		Where("username = ?", req.Username).
 		Exists(ctx)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if usernameExists {
-		return internal.UsernameExistsErr
+		return nil, internal.UsernameExistsErr
 	}
 
 	emailExists, err := s.DB.NewSelect().
@@ -30,15 +30,15 @@ func (s *service) CreateUser(ctx context.Context, req internal.CreateUserRequest
 		Where("email = ?", req.Email).
 		Exists(ctx)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if emailExists {
-		return internal.EmailExistsErr
+		return nil, internal.EmailExistsErr
 	}
 
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	user := &internal.User{
@@ -49,7 +49,19 @@ func (s *service) CreateUser(ctx context.Context, req internal.CreateUserRequest
 	}
 
 	_, err = s.DB.NewInsert().Model(user).Exec(ctx)
-	return err
+	if err != nil {
+		return nil, err
+	}
+
+	token, err := s.newToken(user.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &internal.CreateUserResponse{
+		ID:    user.ID,
+		Token: token,
+	}, nil
 }
 
 func (s *service) GetUser(ctx context.Context, req internal.GetUserRequest) (*internal.GetUserResponse, error) {

@@ -27,17 +27,21 @@ func (s *service) Login(ctx context.Context, req internal.LoginRequest) (*intern
 		return nil, internal.WrongPasswordErr
 	}
 
+	token, err := s.newToken(user.ID)
+	if err != nil {
+		return nil, err
+	}
+	return &internal.LoginResponse{ID: user.ID, Token: token}, nil
+}
+
+func (s *service) newToken(id int64) (string, error) {
 	claims := &internal.JwtClaims{
-		ID: user.ID,
+		ID: id,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24 * 7)),
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	t, err := token.SignedString([]byte(s.Secret))
-	if err != nil {
-		return nil, err
-	}
-	return &internal.LoginResponse{ID: user.ID, Token: t}, nil
+	return token.SignedString([]byte(s.Secret))
 }

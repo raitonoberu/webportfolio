@@ -44,6 +44,13 @@ definitions:
     - password
     - username
     type: object
+  internal.CreateUserResponse:
+    properties:
+      id:
+        type: integer
+      token:
+        type: string
+    type: object
   internal.DeleteLikeRequest:
     properties:
       id:
@@ -497,7 +504,9 @@ paths:
           $ref: '#/definitions/internal.CreateUserRequest'
       responses:
         "201":
-          description: Created
+          description: user
+          schema:
+            $ref: '#/definitions/internal.CreateUserResponse'
         "400":
           description: validation failed
           schema:

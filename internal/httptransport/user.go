@@ -13,7 +13,7 @@ import (
 // @Tags user
 // @Accept json
 // @Param request body internal.CreateUserRequest true "body params"
-// @Success 201
+// @Success 201 {object} internal.CreateUserResponse "user"
 // @Failure 400 {object} errorResponse "validation failed"
 // @Failure 409 {object} errorResponse "username already exists"
 // @Failure 409 {object} errorResponse "email already exists"
@@ -28,11 +28,11 @@ func (h *handler) createUser(c echo.Context) error {
 	}
 
 	ctx := c.Request().Context()
-	err := h.CreateUser(ctx, data)
+	user, err := h.CreateUser(ctx, data)
 	if err != nil {
 		return err
 	}
-	return c.NoContent(201)
+	return c.JSON(201, user)
 }
 
 // @Summary Get user

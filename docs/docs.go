@@ -524,7 +524,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "user",
+                        "schema": {
+                            "$ref": "#/definitions/internal.CreateUserResponse"
+                        }
                     },
                     "400": {
                         "description": "validation failed",
@@ -670,6 +673,17 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal.CreateUserResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "token": {
                     "type": "string"
                 }
             }
