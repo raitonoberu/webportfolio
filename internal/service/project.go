@@ -87,7 +87,12 @@ func (s *service) UpdateProject(ctx context.Context, req internal.UpdateProjectR
 	if req.Readme != nil {
 		query = query.Set("readme = ?", *req.Readme)
 	}
-	query = query.Set("updated_at = ?", time.Now())
+	if req.LikesCount != nil {
+		query = query.Set("likes_count = ?", *req.LikesCount)
+	}
+	if req.UpdatedAt != nil {
+		query = query.Set("updated_at = ?", *req.UpdatedAt)
+	}
 	_, err := query.Exec(ctx)
 	return err
 }
@@ -189,7 +194,10 @@ func (s *service) UploadProject(ctx context.Context, req internal.UploadProjectR
 		}
 	}
 
-	err = s.UpdateProject(ctx, internal.UpdateProjectRequest{})
+	now := time.Now()
+	err = s.UpdateProject(ctx, internal.UpdateProjectRequest{
+		UpdatedAt: &now,
+	})
 	if err != nil {
 		return err
 	}
