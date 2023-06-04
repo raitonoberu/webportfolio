@@ -23,7 +23,7 @@ func (h *handler) createLike(c echo.Context) error {
 	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.CreateLikeRequest{
-		UserID: int64(claims["id"].(float64)),
+		UserID: claims["id"].(int64),
 	}
 	if err := c.Bind(&data); err != nil {
 		return err
@@ -56,7 +56,7 @@ func (h *handler) deleteLike(c echo.Context) error {
 	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.DeleteLikeRequest{
-		UserID: int64(claims["id"].(float64)),
+		UserID: claims["id"].(int64),
 	}
 	if err := c.Bind(&data); err != nil {
 		return err

@@ -76,7 +76,7 @@ func (h *handler) updateUser(c echo.Context) error {
 	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.UpdateUserRequest{
-		ID: int64(claims["id"].(float64)),
+		ID: claims["id"].(int64),
 	}
 	if err := c.Bind(&data); err != nil {
 		return err
@@ -105,7 +105,7 @@ func (h *handler) deleteUser(c echo.Context) error {
 	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.DeleteUserRequest{
-		ID: int64(claims["id"].(float64)),
+		ID: claims["id"].(int64),
 	}
 
 	ctx := c.Request().Context()
@@ -129,7 +129,7 @@ func (h *handler) uploadAvatar(c echo.Context) error {
 	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.UploadAvatarRequest{
-		UserID: int64(claims["id"].(float64)),
+		UserID: claims["id"].(int64),
 	}
 	file, err := c.FormFile("file")
 	if err != nil {
