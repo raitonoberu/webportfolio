@@ -10,7 +10,7 @@ import (
 	_ "webportfolio/docs"
 
 	"github.com/go-playground/validator"
-	"github.com/golang-jwt/jwt/v4"
+	"github.com/golang-jwt/jwt/v5"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -40,7 +40,7 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 
 	authMiddleware := echojwt.WithConfig(echojwt.Config{
 		NewClaimsFunc: func(c echo.Context) jwt.Claims {
-			return new(internal.JwtClaims)
+			return internal.JwtClaims{}
 		},
 		SigningKey: []byte(secret),
 	})
@@ -80,6 +80,10 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 	// upload
 	e.POST("/api/upload/avatar", h.uploadAvatar, authMiddleware)
 	e.POST("/api/upload/project", h.uploadProject, authMiddleware)
+
+	// like
+	e.POST("/api/like", h.createLike, authMiddleware)
+	e.DELETE("/api/like", h.deleteLike, authMiddleware)
 
 	// avatars
 	e.Static("/avatars", "content/avatars")
