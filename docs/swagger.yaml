@@ -5,13 +5,6 @@ definitions:
       message:
         type: string
     type: object
-  internal.CreateLikeRequest:
-    properties:
-      id:
-        type: integer
-    required:
-    - id
-    type: object
   internal.CreateProjectRequest:
     properties:
       description:
@@ -43,13 +36,6 @@ definitions:
     - fullname
     - password
     - username
-    type: object
-  internal.DeleteLikeRequest:
-    properties:
-      id:
-        type: integer
-    required:
-    - id
     type: object
   internal.DeleteProjectRequest:
     properties:
@@ -140,75 +126,6 @@ info:
   title: WebPortfolio API
   version: "1.0"
 paths:
-  /like:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: body params
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/internal.DeleteLikeRequest'
-      responses:
-        "204":
-          description: No Content
-        "400":
-          description: validation failed
-          schema:
-            $ref: '#/definitions/httptransport.errorResponse'
-        "401":
-          description: not authorized
-          schema:
-            $ref: '#/definitions/httptransport.errorResponse'
-        "404":
-          description: project not found
-          schema:
-            $ref: '#/definitions/httptransport.errorResponse'
-        "409":
-          description: project is not liked
-          schema:
-            $ref: '#/definitions/httptransport.errorResponse'
-      security:
-      - Bearer: []
-      summary: Delete like
-      tags:
-      - like
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: body params
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/internal.CreateLikeRequest'
-      responses:
-        "204":
-          description: No Content
-        "400":
-          description: validation failed
-          schema:
-            $ref: '#/definitions/httptransport.errorResponse'
-        "401":
-          description: not authorized
-          schema:
-            $ref: '#/definitions/httptransport.errorResponse'
-        "404":
-          description: project not found
-          schema:
-            $ref: '#/definitions/httptransport.errorResponse'
-        "409":
-          description: project is already liked
-          schema:
-            $ref: '#/definitions/httptransport.errorResponse'
-      security:
-      - Bearer: []
-      summary: Create like
-      tags:
-      - like
   /login:
     post:
       consumes:
