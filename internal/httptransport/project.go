@@ -20,10 +20,10 @@ import (
 // @Security Bearer
 func (h *handler) createProject(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(*internal.JwtClaims)
+	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.CreateProjectRequest{
-		UserID: claims.ID,
+		UserID: claims["id"].(int64),
 	}
 	if err := c.Bind(&data); err != nil {
 		return err
@@ -80,10 +80,10 @@ func (h *handler) getProject(c echo.Context) error {
 // @Security Bearer
 func (h *handler) updateProject(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(*internal.JwtClaims)
+	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.UpdateProjectRequest{
-		UserID: claims.ID,
+		UserID: claims["id"].(int64),
 	}
 	if err := c.Bind(&data); err != nil {
 		return err
@@ -115,10 +115,10 @@ func (h *handler) updateProject(c echo.Context) error {
 // @Security Bearer
 func (h *handler) deleteProject(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(*internal.JwtClaims)
+	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.DeleteProjectRequest{
-		UserID: claims.ID,
+		UserID: claims["id"].(int64),
 	}
 	if err := c.Bind(&data); err != nil {
 		return err
@@ -148,10 +148,10 @@ func (h *handler) deleteProject(c echo.Context) error {
 // @Security Bearer
 func (h *handler) uploadProject(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(*internal.JwtClaims)
+	claims := user.Claims.(jwt.MapClaims)
 
 	data := internal.UploadProjectRequest{
-		UserID: claims.ID,
+		UserID: claims["id"].(int64),
 	}
 	file, err := c.FormFile("file")
 	if err != nil {

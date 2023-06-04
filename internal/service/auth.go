@@ -27,11 +27,9 @@ func (s *service) Login(ctx context.Context, req internal.LoginRequest) (*intern
 		return nil, internal.WrongPasswordErr
 	}
 
-	claims := &internal.JwtClaims{
-		ID: user.ID,
-		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24 * 7)),
-		},
+	claims := jwt.MapClaims{
+		"id":  user.ID,
+		"exp": jwt.NewNumericDate(time.Now().Add(time.Hour * 24 * 7)),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
