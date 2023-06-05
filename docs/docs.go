@@ -179,6 +179,11 @@ const docTemplate = `{
         },
         "/project": {
             "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -202,7 +207,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "name": "user_id",
+                        "name": "userID",
                         "in": "query"
                     },
                     {
@@ -455,6 +460,11 @@ const docTemplate = `{
         },
         "/user": {
             "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -724,6 +734,9 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "is_liked": {
+                    "type": "boolean"
                 },
                 "likes_count": {
                     "type": "integer"

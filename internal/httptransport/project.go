@@ -50,8 +50,16 @@ func (h *handler) createProject(c echo.Context) error {
 // @Failure 404 {object} errorResponse "user not found"
 // @Failure 404 {object} errorResponse "project not found"
 // @Router /project [get]
+// @Security Bearer
 func (h *handler) getProject(c echo.Context) error {
-	data := internal.GetProjectRequest{}
+	var userID int64
+	if user := c.Get("user"); user != nil {
+		userID = user.(*jwt.Token).Claims.(*internal.JwtClaims).ID
+	}
+
+	data := internal.GetProjectRequest{
+		ReqUserID: userID,
+	}
 	if err := c.Bind(&data); err != nil {
 		return err
 	}

@@ -96,6 +96,15 @@ func (s *service) GetUser(ctx context.Context, req internal.GetUserRequest) (*in
 	if req.Projects {
 		projects := make([]internal.GetProjectResponse, len(user.Projects))
 		for i := 0; i < len(user.Projects); i++ {
+			var isLiked *bool
+			if req.UserID != 0 {
+				l, err := s.isLiked(ctx, user.Projects[i].ID, req.UserID)
+				if err != nil {
+					return nil, err
+				}
+				isLiked = &l
+			}
+
 			projects[i] = internal.GetProjectResponse{
 				ID:            user.Projects[i].ID,
 				UserID:        user.Projects[i].UserID,
@@ -106,6 +115,8 @@ func (s *service) GetUser(ctx context.Context, req internal.GetUserRequest) (*in
 				CommentsCount: user.Projects[i].CommentsCount,
 				CreatedAt:     user.Projects[i].CreatedAt,
 				UpdatedAt:     user.Projects[i].UpdatedAt,
+
+				IsLiked: isLiked,
 			}
 		}
 		result.Projects = &projects

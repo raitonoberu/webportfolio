@@ -64,6 +64,16 @@ func (s *service) GetProject(ctx context.Context, req internal.GetProjectRequest
 		}
 		return nil, err
 	}
+
+	var isLiked *bool
+	if req.ReqUserID != 0 {
+		l, err := s.isLiked(ctx, project.ID, req.ReqUserID)
+		if err != nil {
+			return nil, err
+		}
+		isLiked = &l
+	}
+
 	return &internal.GetProjectResponse{
 		ID:            project.ID,
 		UserID:        project.UserID,
@@ -74,6 +84,8 @@ func (s *service) GetProject(ctx context.Context, req internal.GetProjectRequest
 		CommentsCount: project.CommentsCount,
 		CreatedAt:     project.CreatedAt,
 		UpdatedAt:     project.UpdatedAt,
+
+		IsLiked: isLiked,
 	}, nil
 }
 

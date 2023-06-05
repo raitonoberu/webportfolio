@@ -43,6 +43,14 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 			return &internal.JwtClaims{}
 		},
 		SigningKey: []byte(secret),
+
+		ErrorHandler: func(c echo.Context, err error) error {
+			if c.Request().Method != "GET" {
+				return err
+			}
+			return nil
+		},
+		ContinueOnIgnoredError: true,
 	})
 
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
@@ -67,13 +75,13 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 
 	// user
 	e.POST("/api/user", h.createUser)
-	e.GET("/api/user", h.getUser)
+	e.GET("/api/user", h.getUser, authMiddleware) // optional auth
 	e.PATCH("/api/user", h.updateUser, authMiddleware)
 	e.DELETE("/api/user", h.deleteUser, authMiddleware)
 
 	// project
 	e.POST("/api/project", h.createProject, authMiddleware)
-	e.GET("/api/project", h.getProject)
+	e.GET("/api/project", h.getProject, authMiddleware) // optional auth
 	e.PATCH("/api/project", h.updateProject, authMiddleware)
 	e.DELETE("/api/project", h.deleteProject, authMiddleware)
 

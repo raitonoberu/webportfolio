@@ -63,10 +63,11 @@ type CreateUserResponse struct {
 }
 
 type GetUserRequest struct {
-	ID   *int64  `query:"id"`
-	Name *string `query:"name"`
+	ID       *int64  `query:"id"`
+	Name     *string `query:"name"`
+	Projects bool    `query:"projects"`
 
-	Projects bool `query:"projects"`
+	UserID int64 `json:"-"`
 }
 
 type GetUserResponse struct {
@@ -114,7 +115,9 @@ type GetProjectRequest struct {
 	ID       *int64  `query:"id"`
 	Name     *string `query:"name"`
 	Username *string `query:"username"`
-	UserID   *int64  `query:"user_id" json:"user_id"`
+	UserID   *int64  `query:"user_id"`
+
+	ReqUserID int64 `json:"-"`
 }
 
 type GetProjectResponse struct {
@@ -130,6 +133,8 @@ type GetProjectResponse struct {
 
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
+
+	IsLiked *bool `json:"is_liked,omitempty"`
 }
 
 type UpdateProjectRequest struct {

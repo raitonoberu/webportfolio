@@ -14,15 +14,11 @@ func (s *service) CreateLike(ctx context.Context, req internal.CreateLikeRequest
 		return err
 	}
 
-	likeExists, err := s.DB.NewSelect().
-		Model((*internal.Like)(nil)).
-		Where("project_id = ?", req.ID).
-		Where("user_id = ?", req.UserID).
-		Exists(ctx)
+	liked, err := s.isLiked(ctx, req.ID, req.UserID)
 	if err != nil {
 		return err
 	}
-	if likeExists {
+	if liked {
 		return internal.ProjectLikedErr
 	}
 
@@ -78,4 +74,12 @@ func (s *service) DeleteLike(ctx context.Context, req internal.DeleteLikeRequest
 		ID:         req.ID,
 		LikesCount: &likesCount,
 	})
+}
+
+func (s *service) isLiked(ctx context.Context, id, userID int64) (bool, error) {
+	return s.DB.NewSelect().
+		Model((*internal.Like)(nil)).
+		Where("project_id = ?", id).
+		Where("user_id = ?", userID).
+		Exists(ctx)
 }

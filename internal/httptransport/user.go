@@ -44,8 +44,16 @@ func (h *handler) createUser(c echo.Context) error {
 // @Failure 400 {object} errorResponse "bad request"
 // @Failure 404 {object} errorResponse "user not found"
 // @Router /user [get]
+// @Security Bearer
 func (h *handler) getUser(c echo.Context) error {
-	data := internal.GetUserRequest{}
+	var userID int64
+	if user := c.Get("user"); user != nil {
+		userID = user.(*jwt.Token).Claims.(*internal.JwtClaims).ID
+	}
+
+	data := internal.GetUserRequest{
+		UserID: userID,
+	}
 	if err := c.Bind(&data); err != nil {
 		return err
 	}
