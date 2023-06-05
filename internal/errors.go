@@ -9,6 +9,7 @@ var (
 	WrongPasswordErr   = echo.NewHTTPError(403, "wrong password")
 	UserNotFoundErr    = echo.NewHTTPError(404, "user not found")
 	ProjectNotFoundErr = echo.NewHTTPError(404, "project not found")
+	CommentNotFoundErr = echo.NewHTTPError(404, "comment not found")
 	UsernameExistsErr  = echo.NewHTTPError(409, "username already exists")
 	EmailExistsErr     = echo.NewHTTPError(409, "email already exists")
 	ProjectExistsErr   = echo.NewHTTPError(409, "project already exists")

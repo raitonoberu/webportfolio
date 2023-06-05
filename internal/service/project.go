@@ -114,6 +114,9 @@ func (s *service) UpdateProject(ctx context.Context, req internal.UpdateProjectR
 	if req.LikesCount != nil {
 		query = query.Set("likes_count = ?", *req.LikesCount)
 	}
+	if req.CommentsCount != nil {
+		query = query.Set("comments_count = ?", *req.CommentsCount)
+	}
 	if req.UpdatedAt != nil {
 		query = query.Set("updated_at = ?", *req.UpdatedAt)
 	}

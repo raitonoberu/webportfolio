@@ -26,11 +26,11 @@ type Service interface {
 	CreateLike(context.Context, CreateLikeRequest) error
 	DeleteLike(context.Context, DeleteLikeRequest) error
 
-	// -- unimplemented
+	CreateComment(context.Context, CreateCommentRequest) (*CreateCommentResponse, error)
+	GetComments(context.Context, GetCommentsRequest) (GetCommentsResponse, error)
+	DeleteComment(context.Context, DeleteCommentRequest) error
 
-	CreateComment(context.Context, Comment) error
-	Comments(context.Context, int64) ([]Comment, error)
-	DeleteComment(context.Context, int64) error
+	// -- unimplemented
 
 	CreateFollow(context.Context, Follow) error
 	Following(context.Context, int64) ([]Follow, error)
@@ -142,9 +142,10 @@ type UpdateProjectRequest struct {
 	Description *string `json:"description"`
 	Readme      *string `json:"readme"`
 
-	UpdatedAt  *time.Time `json:"-"`
-	LikesCount *int64     `json:"-"`
-	UserID     int64      `json:"-"`
+	UpdatedAt     *time.Time `json:"-"`
+	LikesCount    *int64     `json:"-"`
+	CommentsCount *int64     `json:"-"`
+	UserID        int64      `json:"-"`
 }
 
 type DeleteProjectRequest struct {
@@ -167,6 +168,38 @@ type CreateLikeRequest struct {
 }
 
 type DeleteLikeRequest struct {
+	ID int64 `json:"id" validate:"required"`
+
+	UserID int64 `json:"-"`
+}
+
+type CreateCommentRequest struct {
+	ID   int64  `json:"id" validate:"required"`
+	Text string `json:"text" validate:"required"`
+
+	UserID int64 `json:"-"`
+}
+
+type CreateCommentResponse struct {
+	ID int64 `json:"id"`
+}
+
+type GetCommentsRequest struct {
+	ID int64 `query:"id" validate:"required"`
+}
+
+type GetCommentsResponse []struct {
+	ID   int64  `json:"id"`
+	Text string `json:"text"`
+	User struct {
+		ID       int64  `json:"id"`
+		Username string `json:"username"`
+		Fullname string `json:"fullname"`
+	} `json:"user"`
+	CreatedAt time.Time `json:"created_at"`
+}
+
+type DeleteCommentRequest struct {
 	ID int64 `json:"id" validate:"required"`
 
 	UserID int64 `json:"-"`

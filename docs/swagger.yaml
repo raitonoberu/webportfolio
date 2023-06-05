@@ -5,6 +5,21 @@ definitions:
       message:
         type: string
     type: object
+  internal.CreateCommentRequest:
+    properties:
+      id:
+        type: integer
+      text:
+        type: string
+    required:
+    - id
+    - text
+    type: object
+  internal.CreateCommentResponse:
+    properties:
+      id:
+        type: integer
+    type: object
   internal.CreateLikeRequest:
     properties:
       id:
@@ -50,6 +65,13 @@ definitions:
         type: integer
       token:
         type: string
+    type: object
+  internal.DeleteCommentRequest:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
     type: object
   internal.DeleteLikeRequest:
     properties:
@@ -149,6 +171,115 @@ info:
   title: WebPortfolio API
   version: "1.0"
 paths:
+  /comment:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal.DeleteCommentRequest'
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: validation failed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "404":
+          description: comment not found
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Delete comment
+      tags:
+      - comment
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: comments
+          schema:
+            items:
+              properties:
+                created_at:
+                  type: string
+                id:
+                  type: integer
+                text:
+                  type: string
+                user:
+                  properties:
+                    fullname:
+                      type: string
+                    id:
+                      type: integer
+                    username:
+                      type: string
+                  type: object
+              type: object
+            type: array
+        "400":
+          description: validation failed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "404":
+          description: project not found
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      summary: Get comments
+      tags:
+      - comment
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal.CreateCommentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: comment
+          schema:
+            $ref: '#/definitions/internal.CreateCommentResponse'
+        "400":
+          description: validation failed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "404":
+          description: project not found
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Create comment
+      tags:
+      - comment
   /like:
     delete:
       consumes:

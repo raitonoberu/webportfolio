@@ -62,6 +62,8 @@ type Comment struct {
 	CreatedAt time.Time `bun:"created_at,notnull,default:current_timestamp"`
 
 	Text string `bun:"text"`
+
+	User *User `bun:"rel:has-one,join:user_id=id"`
 }
 
 type Follow struct {

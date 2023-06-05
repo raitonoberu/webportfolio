@@ -93,6 +93,11 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 	e.POST("/api/like", h.createLike, authMiddleware)
 	e.DELETE("/api/like", h.deleteLike, authMiddleware)
 
+	// comment
+	e.POST("/api/comment", h.createComment, authMiddleware)
+	e.GET("/api/comment", h.getComments)
+	e.DELETE("/api/comment", h.deleteComment)
+
 	// avatars
 	e.Static("/avatars", "content/avatars")
 
