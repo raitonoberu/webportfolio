@@ -10,6 +10,7 @@ import (
 
 	"webportfolio/internal"
 
+	"github.com/uptrace/bun"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -73,7 +74,9 @@ func (s *service) GetUser(ctx context.Context, req internal.GetUserRequest) (*in
 		query = query.Where("username = ?", req.Name)
 	}
 	if req.Projects {
-		query = query.Relation("Projects")
+		query = query.Relation("Projects", func(q *bun.SelectQuery) *bun.SelectQuery {
+			return q.OrderExpr("id DESC")
+		})
 	}
 
 	err := query.Scan(ctx)
