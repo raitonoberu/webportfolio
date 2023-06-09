@@ -144,7 +144,7 @@ func (h *handler) deleteProject(c echo.Context) error {
 }
 
 // @Summary Upload project
-// @Tags upload
+// @Tags project
 // @Accept x-www-form-urlencoded
 // @Param file formData file true "zip-archive"
 // @Param id formData int true "project id"
@@ -152,7 +152,7 @@ func (h *handler) deleteProject(c echo.Context) error {
 // @Failure 400 {object} errorResponse "file is too big"
 // @Failure 401 {object} errorResponse "not authorized"
 // @Failure 404 {object} errorResponse "project not found"
-// @Router /upload/project [post]
+// @Router /upload [post]
 // @Security Bearer
 func (h *handler) uploadProject(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
