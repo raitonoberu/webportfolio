@@ -3,6 +3,7 @@ package httptransport
 import (
 	"os"
 	"path/filepath"
+	"strconv"
 	"webportfolio/internal"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -46,15 +47,18 @@ func (h *handler) createAvatar(c echo.Context) error {
 // @Produce png
 // @Param request query internal.GetAvatarRequest true "query params"
 // @Success 200
-// @Failure 400 {object} errorResponse "missing id param"
+// @Failure 400 {object} errorResponse "validation failed"
 // @Router /avatar [get]
 func (h *handler) getAvatar(c echo.Context) error {
-	id := c.QueryParam("id")
-	if id == "" {
-		return echo.NewHTTPError(400, "missing id param")
+	data := internal.GetAvatarRequest{}
+	if err := c.Bind(&data); err != nil {
+		return err
+	}
+	if err := c.Validate(&data); err != nil {
+		return err
 	}
 
-	path := filepath.Join("content", "avatars", id)
+	path := filepath.Join("content", "avatars", strconv.FormatInt(data.ID, 10))
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		return c.File(emptyAvatarPath)
 	}
