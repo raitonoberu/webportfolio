@@ -46,7 +46,7 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 
 		ErrorHandler: func(c echo.Context, err error) error {
 			if c.Request().Method != "GET" {
-				return err
+				return internal.NotAuthorizedErr
 			}
 			return nil
 		},

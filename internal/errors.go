@@ -6,6 +6,7 @@ import (
 
 var (
 	FileTooBigErr      = echo.NewHTTPError(400, "file is too big")
+	NotAuthorizedErr   = echo.NewHTTPError(401, "not authorized")
 	WrongPasswordErr   = echo.NewHTTPError(403, "wrong password")
 	UserNotFoundErr    = echo.NewHTTPError(404, "user not found")
 	ProjectNotFoundErr = echo.NewHTTPError(404, "project not found")
