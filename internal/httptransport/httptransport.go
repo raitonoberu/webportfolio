@@ -147,21 +147,7 @@ func contentMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 			return next(c)
 		}
 
-		user := hostParts[0]
-
-		path := req.URL.Path
-		pathParts := strings.Split(path, "/") // len >= 2
-		if pathParts[1] == "" {
-			// empty project name, redirecting to user page
-			return c.Redirect(302, fmt.Sprintf("http://web-portfolio.tech/%s", user))
-		}
-
-		referer := req.Referer()
-		refererParts := strings.Split(referer, "/")
-		if len(refererParts) > 3 {
-			return c.File(fmt.Sprintf("content/projects/%s/%s%s", user, refererParts[3], req.URL.Path))
-		}
-		return c.File(fmt.Sprintf("content/projects/%s%s", user, req.URL.Path))
+		return c.File(fmt.Sprintf("content/projects/%s%s", hostParts[0], req.URL.Path))
 	}
 }
 

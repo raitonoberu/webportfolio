@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strconv"
 	"time"
 
 	"webportfolio/internal"
@@ -26,9 +27,24 @@ func (s *service) CreateProject(ctx context.Context, req internal.CreateProjectR
 		return nil, internal.ProjectExistsErr
 	}
 
+	folder := req.Name
+	id := 0
+	for {
+		if _, err := os.Stat(filepath.Join("content", "projects", folder)); os.IsNotExist(err) {
+			break
+		}
+		id += 1
+		folder = req.Name + strconv.Itoa(id)
+	}
+
+	if err := os.MkdirAll(filepath.Join("content", "projects", folder), os.ModePerm); err != nil {
+		return nil, err
+	}
+
 	project := &internal.Project{
 		UserID:      req.UserID,
 		Name:        req.Name,
+		Folder:      folder,
 		Description: req.Description,
 	}
 
@@ -78,6 +94,7 @@ func (s *service) GetProject(ctx context.Context, req internal.GetProjectRequest
 		ID:            project.ID,
 		UserID:        project.UserID,
 		Name:          project.Name,
+		Folder:        project.Folder,
 		Description:   project.Description,
 		Readme:        project.Readme,
 		LikesCount:    project.LikesCount,
@@ -135,15 +152,9 @@ func (s *service) DeleteProject(ctx context.Context, req internal.DeleteProjectR
 		return internal.ProjectNotFoundErr
 	}
 
-	user, err := s.GetUser(ctx, internal.GetUserRequest{
-		ID: &req.UserID,
-	})
-	if err != nil {
-		return err
-	}
+	os.RemoveAll(filepath.Join("content", "projects", project.Folder))
 
-	folder := filepath.Join("content", "projects", user.Username, project.Name)
-	os.RemoveAll(folder)
+	// TODO: delete likes & comments
 
 	_, err = s.DB.NewDelete().
 		Model((*internal.Project)(nil)).
@@ -162,28 +173,12 @@ func (s *service) UploadProject(ctx context.Context, req internal.UploadProjectR
 	if project.UserID != req.UserID {
 		return internal.ProjectNotFoundErr
 	}
-	user, err := s.GetUser(ctx, internal.GetUserRequest{
-		ID: &req.UserID,
-	})
-	if err != nil {
-		return err
-	}
 
 	archive, err := req.File.Open()
 	if err != nil {
 		return err
 	}
 	defer archive.Close()
-
-	folder := filepath.Join("content", "projects", user.Username, project.Name)
-	os.RemoveAll(folder)
-
-	ok := false
-	defer func() {
-		if !ok {
-			os.RemoveAll(folder)
-		}
-	}()
 
 	buff := bytes.NewBuffer([]byte{})
 	size, err := io.Copy(buff, archive)
@@ -195,6 +190,17 @@ func (s *service) UploadProject(ctx context.Context, req internal.UploadProjectR
 	if err != nil {
 		return err
 	}
+
+	folder := filepath.Join("content", "projects", project.Folder)
+	os.RemoveAll(folder)
+
+	ok := false
+	defer func() {
+		if !ok {
+			os.RemoveAll(folder)
+			os.MkdirAll(folder, os.ModePerm)
+		}
+	}()
 
 	for _, f := range zipReader.File {
 		filePath := filepath.Join(folder, f.Name)

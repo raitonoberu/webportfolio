@@ -929,6 +929,9 @@
                 "description": {
                     "type": "string"
                 },
+                "folder": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -955,9 +958,6 @@
         "internal.GetUserResponse": {
             "type": "object",
             "properties": {
-                "avatar": {
-                    "type": "boolean"
-                },
                 "bio": {
                     "type": "string"
                 },

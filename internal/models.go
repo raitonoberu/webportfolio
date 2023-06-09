@@ -16,7 +16,6 @@ type User struct {
 
 	Fullname string `bun:"fullname,notnull"`
 	Bio      string `bun:"bio"`
-	Avatar   bool   `bun:"avatar"`
 
 	FollowersCount int64    `bun:"followers_count"`
 	Followers      []Follow `bun:"rel:has-many,join:id=following_id"`
@@ -32,6 +31,7 @@ type Project struct {
 	UserID int64 `bun:"user_id,notnull"`
 
 	Name        string `bun:"name,notnull"`
+	Folder      string `bun:"folder,notnull"`
 	Description string `bun:"description"`
 
 	Likes         []Like    `bun:"rel:has-many,join:id=user_id"`
