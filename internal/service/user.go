@@ -144,13 +144,16 @@ func (s *service) UpdateUser(ctx context.Context, req internal.UpdateUserRequest
 
 func (s *service) DeleteUser(ctx context.Context, req internal.DeleteUserRequest) error {
 	user, err := s.GetUser(ctx, internal.GetUserRequest{
-		ID: &req.ID,
+		ID:       &req.ID,
+		Projects: true,
 	})
 	if err != nil {
 		return err
 	}
 
-	os.RemoveAll(filepath.Join("content", "projects", user.Username))
+	for _, p := range *user.Projects {
+		os.RemoveAll(filepath.Join("content", "projects", p.Folder))
+	}
 	os.RemoveAll(filepath.Join("content", "avatars", strconv.FormatInt(user.ID, 10)))
 
 	_, err = s.DB.NewDelete().

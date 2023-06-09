@@ -122,6 +122,7 @@ type GetProjectResponse struct {
 	ID     int64  `json:"id"`
 	UserID int64  `json:"user_id"`
 	Name   string `json:"name"`
+	Folder string `json:"folder"`
 
 	Description string `json:"description"`
 	Readme      string `json:"readme"`

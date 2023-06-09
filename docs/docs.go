@@ -938,6 +938,9 @@ const docTemplate = `{
                 "description": {
                     "type": "string"
                 },
+                "folder": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -964,9 +967,6 @@ const docTemplate = `{
         "internal.GetUserResponse": {
             "type": "object",
             "properties": {
-                "avatar": {
-                    "type": "boolean"
-                },
                 "bio": {
                     "type": "string"
                 },
