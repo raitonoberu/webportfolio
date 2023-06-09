@@ -93,7 +93,6 @@ func (s *service) GetUser(ctx context.Context, req internal.GetUserRequest) (*in
 		Fullname:       user.Fullname,
 		Email:          user.Email,
 		Bio:            user.Bio,
-		Avatar:         user.Avatar,
 		FollowersCount: user.FollowersCount,
 	}
 	if req.Projects {
@@ -137,9 +136,6 @@ func (s *service) UpdateUser(ctx context.Context, req internal.UpdateUserRequest
 	}
 	if req.Bio != nil {
 		query = query.Set("bio = ?", *req.Bio)
-	}
-	if req.Avatar != nil {
-		query = query.Set("avatar = ?", *req.Avatar)
 	}
 
 	_, err := query.Exec(ctx)
@@ -192,9 +188,5 @@ func (s *service) UploadAvatar(ctx context.Context, req internal.UploadAvatarReq
 	if _, err := io.Copy(dst, img); err != nil {
 		return err
 	}
-
-	avatar := true
-	return s.UpdateUser(ctx, internal.UpdateUserRequest{
-		ID: req.UserID, Avatar: &avatar,
-	})
+	return nil
 }

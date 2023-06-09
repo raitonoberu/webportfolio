@@ -77,7 +77,6 @@ type GetUserResponse struct {
 	Fullname       string `json:"fullname"`
 	Email          string `json:"email"`
 	Bio            string `json:"bio,omitempty"`
-	Avatar         bool   `json:"avatar"`
 	FollowersCount int64  `json:"followers_count"`
 
 	Projects *[]GetProjectResponse `json:"projects,omitempty"`
@@ -87,8 +86,7 @@ type UpdateUserRequest struct {
 	Fullname *string `json:"fullname"`
 	Bio      *string `json:"bio"`
 
-	Avatar *bool `json:"-"`
-	ID     int64 `json:"-"`
+	ID int64 `json:"-"`
 }
 
 type DeleteUserRequest struct {
