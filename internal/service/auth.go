@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"database/sql"
-	"time"
 
 	"webportfolio/internal"
 
@@ -37,9 +36,6 @@ func (s *service) Login(ctx context.Context, req internal.LoginRequest) (*intern
 func (s *service) newToken(id int64) (string, error) {
 	claims := &internal.JwtClaims{
 		ID: id,
-		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24 * 7)),
-		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
