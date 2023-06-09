@@ -171,6 +171,48 @@ info:
   title: WebPortfolio API
   version: "1.0"
 paths:
+  /avatar:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - image/png
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: missing id param
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      summary: Get avatar
+      tags:
+      - avatar
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - description: image
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Create avatar
+      tags:
+      - avatar
   /comment:
     delete:
       consumes:
@@ -499,29 +541,7 @@ paths:
       summary: Create project
       tags:
       - project
-  /upload/avatar:
-    post:
-      consumes:
-      - application/x-www-form-urlencoded
-      parameters:
-      - description: image
-        in: formData
-        name: file
-        required: true
-        type: file
-      responses:
-        "204":
-          description: No Content
-        "401":
-          description: not authorized
-          schema:
-            $ref: '#/definitions/httptransport.errorResponse'
-      security:
-      - Bearer: []
-      summary: Upload avatar
-      tags:
-      - upload
-  /upload/project:
+  /upload:
     post:
       consumes:
       - application/x-www-form-urlencoded
@@ -555,7 +575,7 @@ paths:
       - Bearer: []
       summary: Upload project
       tags:
-      - upload
+      - project
   /user:
     delete:
       responses:

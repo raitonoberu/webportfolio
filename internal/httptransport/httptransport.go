@@ -84,10 +84,7 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 	e.GET("/api/project", h.getProject, authMiddleware) // optional auth
 	e.PATCH("/api/project", h.updateProject, authMiddleware)
 	e.DELETE("/api/project", h.deleteProject, authMiddleware)
-
-	// upload
-	e.POST("/api/upload/avatar", h.uploadAvatar, authMiddleware)
-	e.POST("/api/upload/project", h.uploadProject, authMiddleware)
+	e.POST("/api/upload", h.uploadProject, authMiddleware)
 
 	// like
 	e.POST("/api/like", h.createLike, authMiddleware)
@@ -98,8 +95,9 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 	e.GET("/api/comment", h.getComments)
 	e.DELETE("/api/comment", h.deleteComment)
 
-	// avatars
-	e.Static("/avatars", "content/avatars")
+	// avatar
+	e.GET("/api/avatar", h.getAvatar)
+	e.POST("/api/avatar", h.createAvatar, authMiddleware)
 
 	if l, ok := e.Logger.(*log.Logger); ok {
 		l.SetHeader("${time_rfc3339} ${level}")

@@ -123,32 +123,3 @@ func (h *handler) deleteUser(c echo.Context) error {
 	}
 	return c.NoContent(204)
 }
-
-// @Summary Upload avatar
-// @Tags upload
-// @Accept x-www-form-urlencoded
-// @Param file formData file true "image"
-// @Success 204
-// @Failure 401 {object} errorResponse "not authorized"
-// @Router /upload/avatar [post]
-// @Security Bearer
-func (h *handler) uploadAvatar(c echo.Context) error {
-	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(*internal.JwtClaims)
-
-	data := internal.UploadAvatarRequest{
-		UserID: claims.ID,
-	}
-	file, err := c.FormFile("file")
-	if err != nil {
-		return err
-	}
-	data.File = file
-
-	ctx := c.Request().Context()
-	err = h.UploadAvatar(ctx, data)
-	if err != nil {
-		return err
-	}
-	return c.NoContent(204)
-}

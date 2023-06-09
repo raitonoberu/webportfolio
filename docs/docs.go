@@ -16,6 +16,73 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/avatar": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "image/png"
+                ],
+                "tags": [
+                    "avatar"
+                ],
+                "summary": "Get avatar",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "missing id param",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "tags": [
+                    "avatar"
+                ],
+                "summary": "Create avatar",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "image",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "not authorized",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/comment": {
             "get": {
                 "consumes": [
@@ -539,7 +606,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/upload/avatar": {
+        "/upload": {
             "post": {
                 "security": [
                     {
@@ -550,43 +617,7 @@ const docTemplate = `{
                     "application/x-www-form-urlencoded"
                 ],
                 "tags": [
-                    "upload"
-                ],
-                "summary": "Upload avatar",
-                "parameters": [
-                    {
-                        "type": "file",
-                        "description": "image",
-                        "name": "file",
-                        "in": "formData",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    },
-                    "401": {
-                        "description": "not authorized",
-                        "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/upload/project": {
-            "post": {
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ],
-                "consumes": [
-                    "application/x-www-form-urlencoded"
-                ],
-                "tags": [
-                    "upload"
+                    "project"
                 ],
                 "summary": "Upload project",
                 "parameters": [
