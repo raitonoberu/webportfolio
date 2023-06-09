@@ -41,7 +41,7 @@ const docTemplate = `{
                         "description": "OK"
                     },
                     "400": {
-                        "description": "missing id param",
+                        "description": "validation failed",
                         "schema": {
                             "$ref": "#/definitions/httptransport.errorResponse"
                         }
