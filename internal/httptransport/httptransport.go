@@ -93,7 +93,7 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 	// comment
 	e.POST("/api/comment", h.createComment, authMiddleware)
 	e.GET("/api/comment", h.getComments)
-	e.DELETE("/api/comment", h.deleteComment)
+	e.DELETE("/api/comment", h.deleteComment, authMiddleware)
 
 	// avatar
 	e.GET("/api/avatar", h.getAvatar)
