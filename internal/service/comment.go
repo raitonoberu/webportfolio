@@ -42,6 +42,7 @@ func (s *service) GetComments(ctx context.Context, req internal.GetCommentsReque
 		Model(&comments).
 		Where("project_id = ?", req.ID).
 		Relation("User").
+		OrderExpr("id DESC").
 		Scan(ctx)
 
 	result := make(internal.GetCommentsResponse, len(comments))
