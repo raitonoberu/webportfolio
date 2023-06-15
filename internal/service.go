@@ -36,6 +36,9 @@ type Service interface {
 	GetFollowing(context.Context, GetFollowingRequest) (GetFollowingResponse, error)
 	GetFollowers(context.Context, GetFollowersRequest) (GetFollowersResponse, error)
 	DeleteFollow(context.Context, DeleteFollowRequest) error
+
+	GetFeed(context.Context, GetFeedRequest) (GetFeedResponse, error)
+	GetTrending(context.Context, GetTrendingRequest) (GetTrendingResponse, error)
 }
 
 type LoginRequest struct {
@@ -242,3 +245,15 @@ type DeleteFollowRequest struct {
 
 	UserID int64 `json:"-"`
 }
+
+type GetFeedRequest struct {
+	UserID int64 `json:"-"`
+}
+
+type GetFeedResponse []GetProjectResponse
+
+type GetTrendingRequest struct {
+	UserID int64 `json:"-"`
+}
+
+type GetTrendingResponse []GetProjectResponse

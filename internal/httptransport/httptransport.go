@@ -101,6 +101,10 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 	e.GET("/api/followers", h.getFollowers)
 	e.DELETE("/api/follow", h.deleteFollow, authMiddleware)
 
+	// feed
+	e.GET("/api/feed", h.getFeed, authMiddleware)
+	e.GET("/api/trending", h.getTrending, authMiddleware)
+
 	// avatar
 	e.POST("/api/avatar", h.createAvatar, authMiddleware)
 	e.GET("/api/avatar", h.getAvatar)

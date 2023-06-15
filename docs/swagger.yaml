@@ -338,6 +338,26 @@ paths:
       summary: Create comment
       tags:
       - comment
+  /feed:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: feed
+          schema:
+            items:
+              $ref: '#/definitions/internal.GetProjectResponse'
+            type: array
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Get feed
+      tags:
+      - feed
   /follow:
     delete:
       consumes:
@@ -698,6 +718,22 @@ paths:
       summary: Create project
       tags:
       - project
+  /trending:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: trending
+          schema:
+            items:
+              $ref: '#/definitions/internal.GetProjectResponse'
+            type: array
+      security:
+      - Bearer: []
+      summary: Get trending
+      tags:
+      - feed
   /upload:
     post:
       consumes:
