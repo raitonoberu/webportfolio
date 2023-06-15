@@ -42,6 +42,7 @@ func (s *service) GetFollowing(ctx context.Context, req internal.GetFollowingReq
 	err := s.DB.NewSelect().
 		Model(&follows).
 		Relation("Following").
+		Where("follower_id = ?", req.ID).
 		OrderExpr("id DESC").
 		Scan(ctx)
 
@@ -59,6 +60,7 @@ func (s *service) GetFollowers(ctx context.Context, req internal.GetFollowersReq
 	err := s.DB.NewSelect().
 		Model(&follows).
 		Relation("Follower").
+		Where("following_id = ?", req.ID).
 		OrderExpr("id DESC").
 		Scan(ctx)
 
