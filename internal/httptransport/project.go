@@ -2,6 +2,7 @@ package httptransport
 
 import (
 	"net/http"
+	"strings"
 
 	"webportfolio/internal"
 
@@ -31,6 +32,7 @@ func (h *handler) createProject(c echo.Context) error {
 	if err := c.Validate(&data); err != nil {
 		return err
 	}
+	data.Name = strings.ToLower(data.Name)
 
 	ctx := c.Request().Context()
 	project, err := h.CreateProject(ctx, data)
