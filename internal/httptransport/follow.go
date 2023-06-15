@@ -32,6 +32,10 @@ func (h *handler) createFollow(c echo.Context) error {
 		return err
 	}
 
+	if data.ID == data.UserID {
+		return echo.NewHTTPError(400, "dude wtf")
+	}
+
 	ctx := c.Request().Context()
 	err := h.CreateFollow(ctx, data)
 	if err != nil {
