@@ -110,6 +110,7 @@ func (s *service) GetUser(ctx context.Context, req internal.GetUserRequest) (*in
 				ID:            user.Projects[i].ID,
 				UserID:        user.Projects[i].UserID,
 				Name:          user.Projects[i].Name,
+				Folder:        user.Projects[i].Folder,
 				Description:   user.Projects[i].Description,
 				Readme:        user.Projects[i].Readme,
 				LikesCount:    user.Projects[i].LikesCount,
