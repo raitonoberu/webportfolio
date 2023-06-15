@@ -188,6 +188,13 @@ info:
   version: "1.0"
 paths:
   /avatar:
+    delete:
+      responses:
+        "204":
+          description: No Content
+      summary: Delete avatar
+      tags:
+      - avatar
     get:
       consumes:
       - application/json

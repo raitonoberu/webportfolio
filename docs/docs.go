@@ -81,6 +81,17 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "avatar"
+                ],
+                "summary": "Delete avatar",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
             }
         },
         "/comment": {
