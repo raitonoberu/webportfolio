@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 
 	"webportfolio/internal"
@@ -27,14 +28,15 @@ func (s *service) CreateProject(ctx context.Context, req internal.CreateProjectR
 		return nil, internal.ProjectExistsErr
 	}
 
-	folder := req.Name
+	name := strings.ToLower(req.Name)
+	folder := name
 	id := 0
 	for {
 		if _, err := os.Stat(filepath.Join("content", "projects", folder)); os.IsNotExist(err) {
 			break
 		}
 		id += 1
-		folder = req.Name + strconv.Itoa(id)
+		folder = name + strconv.Itoa(id)
 	}
 
 	if err := os.MkdirAll(filepath.Join("content", "projects", folder), os.ModePerm); err != nil {
