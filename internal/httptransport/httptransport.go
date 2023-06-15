@@ -108,7 +108,7 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 	// avatar
 	e.POST("/api/avatar", h.createAvatar, authMiddleware)
 	e.GET("/api/avatar", h.getAvatar)
-	// e.DELETE("/api/avatar", h.deleteAvatar, authMiddleware)
+	e.DELETE("/api/avatar", h.deleteAvatar, authMiddleware)
 
 	if l, ok := e.Logger.(*log.Logger); ok {
 		l.SetHeader("${time_rfc3339} ${level}")

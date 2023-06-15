@@ -64,3 +64,23 @@ func (h *handler) getAvatar(c echo.Context) error {
 	}
 	return c.File(path)
 }
+
+// @Summary Delete avatar
+// @Tags avatar
+// @Success 204
+// @Router /avatar [delete]
+func (h *handler) deleteAvatar(c echo.Context) error {
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(*internal.JwtClaims)
+
+	data := internal.DeleteAvatarRequest{
+		UserID: claims.ID,
+	}
+
+	ctx := c.Request().Context()
+	err := h.DeleteAvatar(ctx, data)
+	if err != nil {
+		return err
+	}
+	return c.NoContent(204)
+}

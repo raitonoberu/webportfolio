@@ -31,3 +31,8 @@ func (s *service) CreateAvatar(ctx context.Context, req internal.UploadAvatarReq
 	}
 	return nil
 }
+
+func (s *service) DeleteAvatar(ctx context.Context, req internal.DeleteAvatarRequest) error {
+	userID := strconv.FormatInt(req.UserID, 10)
+	return os.Remove(filepath.Join("content", "avatars", userID))
+}

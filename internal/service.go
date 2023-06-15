@@ -17,7 +17,7 @@ type Service interface {
 	DeleteUser(context.Context, DeleteUserRequest) error
 
 	CreateAvatar(context.Context, UploadAvatarRequest) error
-	// DeleteAvatar(context.Context, DeleteAvatarRequest) error
+	DeleteAvatar(context.Context, DeleteAvatarRequest) error
 
 	CreateProject(context.Context, CreateProjectRequest) (*CreateProjectResponse, error)
 	GetProject(context.Context, GetProjectRequest) (*GetProjectResponse, error)
@@ -106,6 +106,10 @@ type GetAvatarRequest struct {
 type UploadAvatarRequest struct {
 	File   *multipart.FileHeader `json:"-"`
 	UserID int64                 `json:"-"`
+}
+
+type DeleteAvatarRequest struct {
+	UserID int64 `json:"-"`
 }
 
 type CreateProjectRequest struct {
