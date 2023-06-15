@@ -16,4 +16,6 @@ var (
 	ProjectExistsErr   = echo.NewHTTPError(409, "project already exists")
 	ProjectLikedErr    = echo.NewHTTPError(409, "project is already liked")
 	ProjectNotLikedErr = echo.NewHTTPError(409, "project is not liked")
+	UserFollowedErr    = echo.NewHTTPError(409, "user is already followed")
+	UserNotFollowedErr = echo.NewHTTPError(409, "user is not followed")
 )

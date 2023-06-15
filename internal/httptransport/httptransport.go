@@ -95,9 +95,16 @@ func Handler(service internal.Service, secret string) *echo.Echo {
 	e.GET("/api/comment", h.getComments)
 	e.DELETE("/api/comment", h.deleteComment, authMiddleware)
 
+	// follow
+	e.POST("/api/follow", h.createFollow, authMiddleware)
+	e.GET("/api/following", h.getFollowing)
+	e.GET("/api/followers", h.getFollowers)
+	e.DELETE("/api/follow", h.deleteFollow, authMiddleware)
+
 	// avatar
-	e.GET("/api/avatar", h.getAvatar)
 	e.POST("/api/avatar", h.createAvatar, authMiddleware)
+	e.GET("/api/avatar", h.getAvatar)
+	// e.DELETE("/api/avatar", h.deleteAvatar, authMiddleware)
 
 	if l, ok := e.Logger.(*log.Logger); ok {
 		l.SetHeader("${time_rfc3339} ${level}")

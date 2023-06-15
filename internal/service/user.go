@@ -122,6 +122,13 @@ func (s *service) GetUser(ctx context.Context, req internal.GetUserRequest) (*in
 		}
 		result.Projects = &projects
 	}
+	if req.UserID != 0 {
+		followed, err := s.isFollowed(ctx, *req.ID, req.UserID)
+		if err != nil {
+			return nil, err
+		}
+		result.IsFollowed = &followed
+	}
 
 	return result, nil
 }
@@ -135,6 +142,9 @@ func (s *service) UpdateUser(ctx context.Context, req internal.UpdateUserRequest
 	}
 	if req.Bio != nil {
 		query = query.Set("bio = ?", *req.Bio)
+	}
+	if req.FollowersCount != nil {
+		query = query.Set("followers_count = ?", *req.FollowersCount)
 	}
 
 	_, err := query.Exec(ctx)
@@ -155,7 +165,7 @@ func (s *service) DeleteUser(ctx context.Context, req internal.DeleteUserRequest
 	}
 	os.RemoveAll(filepath.Join("content", "avatars", strconv.FormatInt(user.ID, 10)))
 
-	// TODO: delete likes & comments
+	// TODO: delete likes & comments & follows
 
 	_, err = s.DB.NewDelete().
 		Model((*internal.Project)(nil)).

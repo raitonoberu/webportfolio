@@ -20,6 +20,13 @@ definitions:
       id:
         type: integer
     type: object
+  internal.CreateFollowRequest:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
   internal.CreateLikeRequest:
     properties:
       id:
@@ -67,6 +74,13 @@ definitions:
         type: string
     type: object
   internal.DeleteCommentRequest:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  internal.DeleteFollowRequest:
     properties:
       id:
         type: integer
@@ -124,6 +138,8 @@ definitions:
         type: string
       id:
         type: integer
+      is_followed:
+        type: boolean
       projects:
         items:
           $ref: '#/definitions/internal.GetProjectResponse'
@@ -322,6 +338,147 @@ paths:
       summary: Create comment
       tags:
       - comment
+  /follow:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal.DeleteFollowRequest'
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: validation failed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "409":
+          description: user is not followed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Delete follow
+      tags:
+      - follow
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal.CreateFollowRequest'
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: validation failed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "401":
+          description: not authorized
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "409":
+          description: user is already followed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      security:
+      - Bearer: []
+      summary: Create follow
+      tags:
+      - follow
+  /followers:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: follows
+          schema:
+            items:
+              properties:
+                fullname:
+                  type: string
+                id:
+                  type: integer
+                username:
+                  type: string
+              type: object
+            type: array
+        "400":
+          description: validation failed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      summary: Get followers
+      tags:
+      - follow
+  /following:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: follows
+          schema:
+            items:
+              properties:
+                fullname:
+                  type: string
+                id:
+                  type: integer
+                username:
+                  type: string
+              type: object
+            type: array
+        "400":
+          description: validation failed
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/httptransport.errorResponse'
+      summary: Get following
+      tags:
+      - follow
   /like:
     delete:
       consumes:

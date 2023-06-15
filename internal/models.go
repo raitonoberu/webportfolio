@@ -72,4 +72,7 @@ type Follow struct {
 	ID          int64 `bun:"id,pk,autoincrement"`
 	FollowerID  int64 `bun:"follower_id,notnull"`
 	FollowingID int64 `bun:"following_id,notnull"`
+
+	Follower  *User `bun:"rel:has-one,join:follower_id=id"`
+	Following *User `bun:"rel:has-one,join:following_id=id"`
 }

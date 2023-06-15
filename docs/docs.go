@@ -255,6 +255,228 @@ const docTemplate = `{
                 }
             }
         },
+        "/follow": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "follow"
+                ],
+                "summary": "Create follow",
+                "parameters": [
+                    {
+                        "description": "body params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal.CreateFollowRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "validation failed",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "not authorized",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "user not found",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "user is already followed",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "follow"
+                ],
+                "summary": "Delete follow",
+                "parameters": [
+                    {
+                        "description": "body params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal.DeleteFollowRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "validation failed",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "not authorized",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "user not found",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "user is not followed",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/followers": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "follow"
+                ],
+                "summary": "Get followers",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "follows",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "validation failed",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "user not found",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/following": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "follow"
+                ],
+                "summary": "Get following",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "follows",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "validation failed",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "user not found",
+                        "schema": {
+                            "$ref": "#/definitions/httptransport.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/like": {
             "post": {
                 "security": [
@@ -854,6 +1076,17 @@ const docTemplate = `{
                 }
             }
         },
+        "internal.CreateFollowRequest": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "internal.CreateLikeRequest": {
             "type": "object",
             "required": [
@@ -925,6 +1158,17 @@ const docTemplate = `{
             }
         },
         "internal.DeleteCommentRequest": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "internal.DeleteFollowRequest": {
             "type": "object",
             "required": [
                 "id"
@@ -1012,6 +1256,9 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "is_followed": {
+                    "type": "boolean"
                 },
                 "projects": {
                     "type": "array",

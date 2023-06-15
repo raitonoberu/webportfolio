@@ -32,12 +32,10 @@ type Service interface {
 	GetComments(context.Context, GetCommentsRequest) (GetCommentsResponse, error)
 	DeleteComment(context.Context, DeleteCommentRequest) error
 
-	// -- unimplemented
-
-	CreateFollow(context.Context, Follow) error
-	Following(context.Context, int64) ([]Follow, error)
-	Followers(context.Context, int64) ([]Follow, error)
-	DeleteFollow(context.Context, int64) error
+	CreateFollow(context.Context, CreateFollowRequest) error
+	GetFollowing(context.Context, GetFollowingRequest) (GetFollowingResponse, error)
+	GetFollowers(context.Context, GetFollowersRequest) (GetFollowersResponse, error)
+	DeleteFollow(context.Context, DeleteFollowRequest) error
 }
 
 type LoginRequest struct {
@@ -82,13 +80,16 @@ type GetUserResponse struct {
 	FollowersCount int64  `json:"followers_count"`
 
 	Projects *[]GetProjectResponse `json:"projects,omitempty"`
+
+	IsFollowed *bool `json:"is_followed,omitempty"`
 }
 
 type UpdateUserRequest struct {
 	Fullname *string `json:"fullname"`
 	Bio      *string `json:"bio"`
 
-	ID int64 `json:"-"`
+	FollowersCount *int64 `json:"-"`
+	ID             int64  `json:"-"`
 }
 
 type DeleteUserRequest struct {
@@ -205,6 +206,38 @@ type GetCommentsResponse []struct {
 }
 
 type DeleteCommentRequest struct {
+	ID int64 `json:"id" validate:"required"`
+
+	UserID int64 `json:"-"`
+}
+
+type CreateFollowRequest struct {
+	ID int64 `json:"id" validate:"required"`
+
+	UserID int64 `json:"-"`
+}
+
+type GetFollowingRequest struct {
+	ID int64 `query:"id" validate:"required"`
+}
+
+type GetFollowingResponse []struct {
+	ID       int64  `json:"id"`
+	Username string `json:"username"`
+	Fullname string `json:"fullname"`
+}
+
+type GetFollowersRequest struct {
+	ID int64 `query:"id" validate:"required"`
+}
+
+type GetFollowersResponse []struct {
+	ID       int64  `json:"id"`
+	Username string `json:"username"`
+	Fullname string `json:"fullname"`
+}
+
+type DeleteFollowRequest struct {
 	ID int64 `json:"id" validate:"required"`
 
 	UserID int64 `json:"-"`
