@@ -25,7 +25,7 @@ func (s *service) GetFeed(ctx context.Context, req internal.GetFeedRequest) (int
 	var projects []internal.Project
 
 	err = s.DB.NewSelect().
-		Model(projects).
+		Model(&projects).
 		Where("user_id IN (?)", bun.In(user_ids)).
 		OrderExpr("updated_at DESC").
 		Limit(20).
