@@ -48,7 +48,7 @@ func (s *service) GetFollowing(ctx context.Context, req internal.GetFollowingReq
 
 	result := make(internal.GetFollowingResponse, len(follows))
 	for i := 0; i < len(follows); i++ {
-		result[i].ID = follows[i].ID
+		result[i].ID = follows[i].Following.ID
 		result[i].Username = follows[i].Following.Username
 		result[i].Fullname = follows[i].Following.Fullname
 	}
@@ -66,7 +66,7 @@ func (s *service) GetFollowers(ctx context.Context, req internal.GetFollowersReq
 
 	result := make(internal.GetFollowersResponse, len(follows))
 	for i := 0; i < len(follows); i++ {
-		result[i].ID = follows[i].ID
+		result[i].ID = follows[i].Follower.ID
 		result[i].Username = follows[i].Follower.Username
 		result[i].Fullname = follows[i].Follower.Fullname
 	}
