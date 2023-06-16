@@ -111,7 +111,7 @@ func (h *handler) deleteFollow(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(*internal.JwtClaims)
 
-	data := internal.DeleteLikeRequest{
+	data := internal.DeleteFollowRequest{
 		UserID: claims.ID,
 	}
 	if err := c.Bind(&data); err != nil {
@@ -122,7 +122,7 @@ func (h *handler) deleteFollow(c echo.Context) error {
 	}
 
 	ctx := c.Request().Context()
-	err := h.DeleteLike(ctx, data)
+	err := h.DeleteFollow(ctx, data)
 	if err != nil {
 		return err
 	}
