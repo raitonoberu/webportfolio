@@ -1,7 +1,7 @@
 # build backend
 FROM golang:alpine AS back
 RUN mkdir /app 
-ADD . /app/ 
+COPY backend/ /app/ 
 WORKDIR /app 
 RUN go build -o main . 
 
@@ -16,7 +16,7 @@ RUN npm run build
 # deploy
 FROM scratch
 WORKDIR /
-
 COPY --from=back /app/main main
 COPY --from=front /app/build/ static/
+
 ENTRYPOINT [ "/main" ]
