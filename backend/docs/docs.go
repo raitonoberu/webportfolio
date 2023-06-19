@@ -43,7 +43,7 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -77,7 +77,7 @@ const docTemplate = `{
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -152,13 +152,13 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "project not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -200,19 +200,19 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "project not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -248,19 +248,19 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "comment not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -293,7 +293,7 @@ const docTemplate = `{
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -331,25 +331,25 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "user not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "409": {
                         "description": "user is already followed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -385,25 +385,25 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "user not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "409": {
                         "description": "user is not followed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -453,13 +453,13 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "user not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -509,13 +509,13 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "user not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -553,25 +553,25 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "project not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "409": {
                         "description": "project is already liked",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -607,25 +607,25 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "project not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "409": {
                         "description": "project is not liked",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -664,19 +664,19 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "403": {
                         "description": "wrong password",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "user not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -731,13 +731,13 @@ const docTemplate = `{
                     "400": {
                         "description": "bad request",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "project not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -776,13 +776,13 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -818,13 +818,13 @@ const docTemplate = `{
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "project not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -860,13 +860,13 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -936,19 +936,19 @@ const docTemplate = `{
                     "400": {
                         "description": "file is too big",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "project not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -998,13 +998,13 @@ const docTemplate = `{
                     "400": {
                         "description": "bad request",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "404": {
                         "description": "user not found",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -1038,13 +1038,13 @@ const docTemplate = `{
                     "400": {
                         "description": "validation failed",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "409": {
                         "description": "email already exists",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -1066,7 +1066,7 @@ const docTemplate = `{
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -1102,13 +1102,13 @@ const docTemplate = `{
                     "400": {
                         "description": "bad request",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     },
                     "401": {
                         "description": "not authorized",
                         "schema": {
-                            "$ref": "#/definitions/httptransport.errorResponse"
+                            "$ref": "#/definitions/api.errorResponse"
                         }
                     }
                 }
@@ -1116,7 +1116,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "httptransport.errorResponse": {
+        "api.errorResponse": {
             "type": "object",
             "properties": {
                 "message": {

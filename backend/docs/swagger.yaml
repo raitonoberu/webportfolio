@@ -1,6 +1,6 @@
 basePath: /api
 definitions:
-  httptransport.errorResponse:
+  api.errorResponse:
     properties:
       message:
         type: string
@@ -211,7 +211,7 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       summary: Get avatar
       tags:
       - avatar
@@ -230,7 +230,7 @@ paths:
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Create avatar
@@ -253,15 +253,15 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: comment not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Delete comment
@@ -303,11 +303,11 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: project not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       summary: Get comments
       tags:
       - comment
@@ -331,15 +331,15 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: project not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Create comment
@@ -359,7 +359,7 @@ paths:
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Get feed
@@ -382,19 +382,19 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: user not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "409":
           description: user is not followed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Delete follow
@@ -416,19 +416,19 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: user not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "409":
           description: user is already followed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Create follow
@@ -462,11 +462,11 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: user not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       summary: Get followers
       tags:
       - follow
@@ -498,11 +498,11 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: user not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       summary: Get following
       tags:
       - follow
@@ -523,19 +523,19 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: project not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "409":
           description: project is not liked
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Delete like
@@ -557,19 +557,19 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: project not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "409":
           description: project is already liked
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Create like
@@ -596,15 +596,15 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "403":
           description: wrong password
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: user not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       summary: Login to account
       tags:
       - auth
@@ -625,11 +625,11 @@ paths:
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: project not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Delete project
@@ -661,11 +661,11 @@ paths:
         "400":
           description: bad request
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: project not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Get project
@@ -687,11 +687,11 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Update project
@@ -715,11 +715,11 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Create project
@@ -762,15 +762,15 @@ paths:
         "400":
           description: file is too big
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: project not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Upload project
@@ -784,7 +784,7 @@ paths:
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Delete user
@@ -813,11 +813,11 @@ paths:
         "400":
           description: bad request
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "404":
           description: user not found
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Get user
@@ -839,11 +839,11 @@ paths:
         "400":
           description: bad request
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "401":
           description: not authorized
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       security:
       - Bearer: []
       summary: Update user
@@ -867,11 +867,11 @@ paths:
         "400":
           description: validation failed
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
         "409":
           description: email already exists
           schema:
-            $ref: '#/definitions/httptransport.errorResponse'
+            $ref: '#/definitions/api.errorResponse'
       summary: Create user
       tags:
       - user

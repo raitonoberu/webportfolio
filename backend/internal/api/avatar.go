@@ -1,4 +1,4 @@
-package httptransport
+package api
 
 import (
 	"os"

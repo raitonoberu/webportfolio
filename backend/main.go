@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"os"
 
-	"webportfolio/internal/httptransport"
+	"webportfolio/internal/api"
 	"webportfolio/internal/service"
 
 	"github.com/uptrace/bun"
@@ -39,5 +39,5 @@ func main() {
 		panic(err)
 	}
 
-	panic(httptransport.Handler(service, secret).Start(":8000"))
+	panic(api.Handler(service, secret).Start(":8000"))
 }
