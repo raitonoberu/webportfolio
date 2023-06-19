@@ -28,7 +28,7 @@ func (s *service) CreateProject(ctx context.Context, req internal.CreateProjectR
 		return nil, internal.ProjectExistsErr
 	}
 
-	name := strings.ToLower(req.Name)
+	name := strings.ReplaceAll(strings.ToLower(req.Name), " ", "")
 	folder := name
 	id := 0
 	for {
